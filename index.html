@@ -246,23 +246,23 @@
 
     #toast.show { opacity: 1; }
 
-    /* Hint button */
+    /* Hint button — same size as question number circle */
     .hint-btn {
       flex-shrink: 0;
-      width: 22px;
-      height: 22px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: #FFC000;
       border: none;
       color: white;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       font-style: italic;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 4px;
+      margin-top: 1px;
       transition: background 0.12s;
       -webkit-tap-highlight-color: transparent;
     }
@@ -539,6 +539,7 @@
         <div class="q-header">
           <span class="q-number">2</span>
           <span class="q-label">What would a great ordinary week look like outside the business?</span>
+          <button class="hint-btn" data-hint="p1q2" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p1q2"></div>
         <button class="add-btn" data-qid="p1q2" type="button">+ Add another</button>
@@ -548,6 +549,7 @@
         <div class="q-header">
           <span class="q-number">3</span>
           <span class="q-label">What do you want the people closest to you to experience from you this year?</span>
+          <button class="hint-btn" data-hint="p1q3" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p1q3"></div>
         <button class="add-btn" data-qid="p1q3" type="button">+ Add another</button>
@@ -565,6 +567,7 @@
         <div class="q-header">
           <span class="q-number">4</span>
           <span class="q-label">What is one business result that would make the biggest difference this year?</span>
+          <button class="hint-btn" data-hint="p2q4" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p2q4"></div>
         <button class="add-btn" data-qid="p2q4" type="button">+ Add another</button>
@@ -574,6 +577,7 @@
         <div class="q-header">
           <span class="q-number">5</span>
           <span class="q-label">What work are you still doing that the business should no longer rely on you for?</span>
+          <button class="hint-btn" data-hint="p2q5" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p2q5"></div>
         <button class="add-btn" data-qid="p2q5" type="button">+ Add another</button>
@@ -583,6 +587,7 @@
         <div class="q-header">
           <span class="q-number">6</span>
           <span class="q-label">Describe the type of client, job or work you want more of – and the type you want less of.</span>
+          <button class="hint-btn" data-hint="p2q6" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p2q6"></div>
         <button class="add-btn" data-qid="p2q6" type="button">+ Add another</button>
@@ -600,6 +605,7 @@
         <div class="q-header">
           <span class="q-number">7</span>
           <span class="q-label">What kind of owner or leader does the next version of your business need you to become?</span>
+          <button class="hint-btn" data-hint="p3q7" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p3q7"></div>
         <button class="add-btn" data-qid="p3q7" type="button">+ Add another</button>
@@ -609,6 +615,7 @@
         <div class="q-header">
           <span class="q-number">8</span>
           <span class="q-label">What habit, if done consistently for 90 days, would change your business or life?</span>
+          <button class="hint-btn" data-hint="p3q8" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p3q8"></div>
         <button class="add-btn" data-qid="p3q8" type="button">+ Add another</button>
@@ -626,6 +633,7 @@
         <div class="q-header">
           <span class="q-number">9</span>
           <span class="q-label">What keeps slowing you down, distracting you, or pulling you back into old patterns?</span>
+          <button class="hint-btn" data-hint="p4q9" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p4q9"></div>
         <button class="add-btn" data-qid="p4q9" type="button">+ Add another</button>
@@ -635,6 +643,7 @@
         <div class="q-header">
           <span class="q-number">10</span>
           <span class="q-label">What belief, fear, excuse or story might be keeping you stuck at your current level?</span>
+          <button class="hint-btn" data-hint="p4q10" type="button" aria-label="Information and Help" title="Information and Help">i</button>
         </div>
         <div class="answer-boxes" data-qid="p4q10"></div>
         <button class="add-btn" data-qid="p4q10" type="button">+ Add another</button>
@@ -677,7 +686,141 @@
         'I would take my kids to school twice a week instead of rushing out the door.',
         'I would spend one morning a week thinking, planning and working on the business properly.',
       ]
-    }
+    },
+    p1q2: {
+      title: 'What would a great ordinary week look like outside the business?',
+      body: 'This is not about a fantasy holiday or a once-a-year escape. This is about what a better normal could look like. Your business should support a good life, not consume it.',
+      thinkAbout: 'Wake-up time, exercise, family meals, evenings, weekends, hobbies, rest, sleep, phone boundaries, and how you want to feel at the end of the week.',
+      examples: [
+        'I finish work by 5:30pm at least four nights a week.',
+        'I exercise three times a week and sleep properly.',
+        'I have dinner with my family most nights without my laptop open.',
+        'Sundays feel calm and organised instead of stressful and reactive.',
+        'I start Monday with energy instead of dread.',
+      ]
+    },
+    p1q3: {
+      title: 'What do you want the people closest to you to experience from you this year?',
+      body: 'Success is not just what happens in the business. It is also how the people closest to you experience you. This question helps you think about the kind of person you want to be, not just the kind of business you want to build.',
+      thinkAbout: 'Presence, patience, energy, reliability, calmness, follow-through, communication, mood, and availability.',
+      examples: [
+        'I want my family to experience me as calmer and more present.',
+        'I want my partner to feel like I am actually listening, not half-working all the time.',
+        'I want my kids to see me as involved, playful and not always stressed.',
+        'I want my friends to know I still make time for them.',
+        'I want my team to experience me as clear, steady and less reactive.',
+      ]
+    },
+    p2q4: {
+      title: 'What is one business result that would make the biggest difference this year?',
+      body: 'Not every goal matters equally. Some results change everything. This question helps you identify the business result that would create the most relief, momentum or opportunity.',
+      thinkAbout: 'Revenue, profit, gross margin, cash flow, debtor days, average job value, recurring income, team performance, owner hours, lead flow, conversion rate, or reducing rework.',
+      examples: [
+        'Increase gross profit margin from 28% to 35%.',
+        'Reduce overdue debtors so cash flow stops creating constant pressure.',
+        'Lift average job value from $4,000 to $6,000.',
+        'Get myself out of quoting every job.',
+        'Build enough consistency in sales so we are not always chasing the next job.',
+        'Reduce owner hours from 60 per week to 45 per week.',
+      ]
+    },
+    p2q5: {
+      title: 'What work are you still doing that the business should no longer rely on you for?',
+      body: 'Most owners become the bottleneck because too much still depends on them. This question helps identify where the business is over-reliant on you.',
+      thinkAbout: 'Quoting, scheduling, customer follow-up, ordering, invoicing, team problem-solving, site visits, quality control, admin, bookkeeping, hiring, or answering every question.',
+      examples: [
+        'I am still doing most of the quoting even though someone else could be trained.',
+        'I still answer too many day-to-day team questions.',
+        'I am too involved in scheduling and job coordination.',
+        'I keep checking work that the team should be accountable for.',
+        'I still handle too much customer communication personally.',
+      ]
+    },
+    p2q6: {
+      title: 'Describe the type of client, job or work you want more of – and the type you want less of.',
+      body: 'A better business is not just more work. It is better work. This question helps you clarify what you want to attract and what you need to stop tolerating.',
+      thinkAbout: 'Best clients, worst clients, job size, margins, location, industry, communication style, repeat work, payment behaviour, scope clarity, and stress level.',
+      exampleGroups: [
+        {
+          label: 'More of',
+          items: [
+            'Clients who value quality, pay on time and respect our process.',
+            'Higher-margin jobs with clear scope and fewer variations.',
+            'Repeat clients who trust us and do not need to be chased.',
+            'Work that fits our strengths and does not create chaos for the team.',
+          ]
+        },
+        {
+          label: 'Less of',
+          items: [
+            'Price-shopping clients who argue over every detail.',
+            'Last-minute jobs with unclear scope.',
+            'Low-margin work that keeps us busy but does not move us forward.',
+            'Clients who ignore boundaries and expect instant responses.',
+          ]
+        }
+      ]
+    },
+    p3q7: {
+      title: 'What kind of owner or leader does the next version of your business need you to become?',
+      body: 'The business cannot grow beyond the way it is being led. This question starts the identity work you will build on in Week 1. Do not just think about what you need to do. Think about who you need to become.',
+      thinkAbout: 'Leadership, decision-making, communication, discipline, standards, delegation, confidence, financial control, calmness, consistency, and strategic thinking.',
+      examples: [
+        'I need to become a calmer leader who does not pass pressure onto the team.',
+        'I need to become more financially focused and review the numbers every week.',
+        'I need to become a better delegator instead of fixing everything myself.',
+        'I need to become more strategic and stop spending all week reacting.',
+        'I need to become someone who holds standards consistently, not only when I am frustrated.',
+      ]
+    },
+    p3q8: {
+      title: 'What habit, if done consistently for 90 days, would change your business or life?',
+      body: 'Most owners do not need 20 new habits. They need one or two high-leverage habits done consistently. This question prepares you for the Keystone Habit work in the course.',
+      thinkAbout: 'Weekly CEO time, reviewing numbers, daily planning, lead follow-up, team huddles, exercise, sleep, phone boundaries, content creation, quoting review, debtor follow-up, or end-of-day shutdown.',
+      examples: [
+        'Review cash flow, debtors and job profitability every Monday morning.',
+        'Plan my top three priorities before opening email each day.',
+        'Hold a 15-minute team huddle every Monday morning.',
+        'Follow up three warm leads every day before 10am.',
+        'Walk for 30 minutes after dinner five nights a week.',
+        'Turn my phone off after 7pm on weeknights.',
+      ]
+    },
+    p4q9: {
+      title: 'What keeps slowing you down, distracting you, or pulling you back into old patterns?',
+      body: 'Most execution problems are not motivation problems. They are friction problems. Something in your environment, calendar, systems, habits or thinking keeps making follow-through harder than it needs to be. This question prepares you for the friction and execution work in Week 2.',
+      thinkAbout: 'Interruptions, unclear priorities, inbox overload, messy systems, lack of templates, no meeting rhythm, no planning time, staff dependency, poor sleep, phone habits, too many low-value tasks, or always saying yes.',
+      examples: [
+        'I start the day in email and lose control before I have planned properly.',
+        'The team interrupts me constantly because we do not have clear systems.',
+        'I do not have standard templates for quoting, so every quote takes too long.',
+        'I keep saying yes to urgent jobs and lose time for strategic work.',
+        'I get tired and reactive because I do not protect sleep or exercise.',
+        'My calendar is full, but not with the work that actually moves the business forward.',
+      ]
+    },
+    p4q10: {
+      title: 'What belief, fear, excuse or story might be keeping you stuck at your current level?',
+      body: 'Most owners know more than they are doing. The real issue is often the story underneath the behaviour. This question prepares you for the mindset work in Week 3, where we look at limiting beliefs, the internal thermostat, and why people snap back to old patterns under pressure.',
+      thinkAboutList: [
+        '"No one can do it like me."',
+        '"I do not have time."',
+        '"I am not a numbers person."',
+        '"Clients will not pay that much."',
+        '"I am not a natural leader."',
+        '"If I step back, everything will fall apart."',
+        '"I have tried before and it did not work."',
+        '"This is just how the industry is."',
+      ],
+      examples: [
+        'I tell myself no one can quote or manage clients as well as I can.',
+        'I believe I do not have time to work on the business, even though I know I need to.',
+        'I avoid the numbers because I tell myself I am not good with financials.',
+        'I worry that if I raise prices, clients will leave.',
+        'I tell myself the team is not ready, but maybe I have not trained them properly.',
+        'I keep saying, "Once things settle down," but they never do.',
+      ]
+    },
   };
 
   // ── Hint sheet open / close ───────────────────────────────────────────────
@@ -687,13 +830,25 @@
   function openHint(key) {
     const h = HINTS[key];
     if (!h) return;
-    hintContent.innerHTML = `
-      <h3>${h.title}</h3>
-      <p>${h.body}</p>
-      <p><strong>Think about:</strong> ${h.thinkAbout}</p>
-      <p class="hint-examples-label">Example Answers</p>
-      <ul>${h.examples.map(e => `<li>${e}</li>`).join('')}</ul>
-    `;
+
+    // Think about section — plain string or quoted list
+    const thinkHtml = h.thinkAboutList
+      ? `<p class="hint-examples-label">Think about</p><ul>${h.thinkAboutList.map(e => `<li>${e}</li>`).join('')}</ul>`
+      : `<p><strong>Think about:</strong> ${h.thinkAbout}</p>`;
+
+    // Examples section — simple list or grouped (Q6)
+    let examplesHtml = '';
+    if (h.examples) {
+      examplesHtml = `<p class="hint-examples-label">Example Answers</p><ul>${h.examples.map(e => `<li>${e}</li>`).join('')}</ul>`;
+    } else if (h.exampleGroups) {
+      examplesHtml = `<p class="hint-examples-label">Example Answers</p>` +
+        h.exampleGroups.map(g =>
+          `<p style="font-size:12px;font-weight:700;color:#374151;margin:10px 0 6px;">${g.label}</p>
+           <ul>${g.items.map(e => `<li>${e}</li>`).join('')}</ul>`
+        ).join('');
+    }
+
+    hintContent.innerHTML = `<h3>${h.title}</h3><p>${h.body}</p>${thinkHtml}${examplesHtml}`;
     hintOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
