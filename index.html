@@ -253,7 +253,7 @@
 <div id="save-bar-top">
   <div class="save-bar-inner">
     <span class="save-bar-title">Kick Start</span>
-    <button class="save-btn" id="save-btn-top" type="button">Save and email my answers</button>
+    <button class="save-btn" id="save-btn-top" type="button">Save and email me my answers</button>
   </div>
 </div>
 
@@ -269,11 +269,11 @@
     <div style="font-size:14px; color:#374151; line-height:1.75;">
       <p style="margin:0 0 12px;">Before we start building your next level, we need to get clear on where you are now, what you actually want, and what keeps pulling you back.</p>
       <p style="margin:0 0 12px;">This pre-work gives you a starting point. You will use these answers throughout the program to shape your goals, identity statements, habits, systems and action plan. Here are some guidelines for completion:</p>
-      <ol style="margin:0; padding-left:20px; display:flex; flex-direction:column; gap:8px;">
-        <li>This is not a test. It is not about perfect answers. It is about honest answers.</li>
-        <li>Don't write what sounds impressive. Write what is true.</li>
-        <li>Done is better than perfect. Take approximately 30 minutes to complete this.</li>
-        <li>Tap <strong style="color:#15397F;">Save and email my answers</strong> at any point to get a link sent to you – you can return and edit any time.</li>
+      <ol style="margin:0; padding-left:22px; list-style-type:decimal;">
+        <li style="margin-bottom:8px;">This is not a test. It is not about perfect answers. It is about honest answers.</li>
+        <li style="margin-bottom:8px;">Don't write what sounds impressive. Write what is true.</li>
+        <li style="margin-bottom:8px;">Done is better than perfect. Take approximately 30 minutes to complete this.</li>
+        <li>Tap <strong style="color:#15397F;">Save and email me my answers</strong> at any point to get a link sent to you – you can return and edit any time.</li>
       </ol>
     </div>
   </div>
@@ -283,21 +283,21 @@
     <h2 class="section-heading">Before You Start – Your Details</h2>
     <div style="display:flex; flex-direction:column; gap:16px;">
       <div>
-        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="name">Your name</label>
-        <input class="field-input" type="text" id="name" placeholder="Full name" autocomplete="name">
+        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="name">Your name <span style="color:#ef4444;">*</span></label>
+        <input class="field-input" type="text" id="name" placeholder="Full name" autocomplete="name" required>
       </div>
       <div>
         <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="email">Your email <span style="color:#ef4444;">*</span></label>
-        <input class="field-input" type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        <input class="field-input" type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
         <p style="font-size:12px; color:#94a3b8; margin:6px 0 0;">We'll email you a link so you can return and edit any time.</p>
       </div>
       <div>
-        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="business_name">Business name</label>
-        <input class="field-input" type="text" id="business_name" placeholder="Your business name" autocomplete="organization">
+        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="business_name">Business name <span style="color:#ef4444;">*</span></label>
+        <input class="field-input" type="text" id="business_name" placeholder="Your business name" autocomplete="organization" required>
       </div>
       <div>
-        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="advisor_name">Advisor name</label>
-        <input class="field-input" type="text" id="advisor_name" placeholder="Your advisor's name">
+        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="advisor_name">Advisor name <span style="color:#ef4444;">*</span></label>
+        <input class="field-input" type="text" id="advisor_name" placeholder="Your advisor's name" required>
       </div>
     </div>
   </div>
@@ -560,7 +560,7 @@
   <!-- Bottom save button -->
   <div style="margin-top: 8px;">
     <div class="save-bar-inner" style="max-width:100%;">
-      <button class="save-btn" id="save-btn-bottom" type="button" style="flex:1; padding:16px 18px; font-size:15px; border-radius:12px;">Save and email my answers</button>
+      <button class="save-btn" id="save-btn-bottom" type="button" style="flex:1; padding:16px 18px; font-size:15px; border-radius:12px;">Save and email me my answers</button>
     </div>
   </div>
 
@@ -718,13 +718,16 @@
 
   // ── Save and email (shared handler) ──────────────────────────────────────
   async function handleSave(triggerBtn) {
-    const email = (document.getElementById('email').value || '').trim();
-    if (!email || !email.includes('@')) {
-      showToast('Please enter your email address first.');
-      document.getElementById('email').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => document.getElementById('email').focus(), 400);
+    const required = ['name','email','business_name','advisor_name'];
+    const labels = { name: 'your name', email: 'your email', business_name: 'your business name', advisor_name: 'your advisor name' };
+    const missing = required.find(id => !document.getElementById(id).value.trim());
+    if (missing) {
+      showToast(`Please enter ${labels[missing]} before saving.`);
+      document.getElementById(missing).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => document.getElementById(missing).focus(), 400);
       return;
     }
+    const email = document.getElementById('email').value.trim();
 
     const originalText = triggerBtn.textContent;
     document.querySelectorAll('.save-btn').forEach(b => { b.disabled = true; b.textContent = 'Sending…'; });
@@ -738,7 +741,7 @@
       } catch {
         prompt('Copy your personal link:', shareUrl);
       }
-      document.querySelectorAll('.save-btn').forEach(b => { b.disabled = false; b.textContent = 'Save and email my answers'; });
+      document.querySelectorAll('.save-btn').forEach(b => { b.disabled = false; b.textContent = 'Save and email me my answers'; });
       return;
     }
 
@@ -765,7 +768,7 @@
         prompt('Copy your personal link:', shareUrl);
       }
     } finally {
-      document.querySelectorAll('.save-btn').forEach(b => { b.disabled = false; b.textContent = 'Save and email my answers'; });
+      document.querySelectorAll('.save-btn').forEach(b => { b.disabled = false; b.textContent = 'Save and email me my answers'; });
     }
   }
 
