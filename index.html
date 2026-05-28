@@ -656,7 +656,10 @@
   <div class="card">
     <h2 class="section-heading">Final Commitment – Why This Matters</h2>
     <div>
-      <label style="display:block; font-size:15px; font-weight:500; color:#1e293b; margin-bottom:8px;" for="fc">Why does this matter to me now?</label>
+      <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
+        <label style="font-size:15px; font-weight:500; color:#1e293b; flex:1;" for="fc">What is the real reason you are ready to take this seriously now?</label>
+        <button class="hint-btn" data-hint="fc" type="button" aria-label="Information and Help" title="Information and Help">i</button>
+      </div>
       <textarea class="field-input" id="fc" placeholder="Your answer..."></textarea>
     </div>
   </div>
@@ -820,6 +823,18 @@
         'I tell myself the team is not ready, but maybe I have not trained them properly.',
         'I keep saying, "Once things settle down," but they never do.',
       ]
+    },
+    fc: {
+      title: 'What is the real reason you are ready to take this seriously now?',
+      body: 'Before you begin the Kickstart Program, take a moment to be honest with yourself. This is not about writing the "right" answer. It is about recognising why this matters to you, your business, your team, your family, your future, or your own peace of mind.',
+      thinkAboutList: [
+        'What is no longer working the way it needs to?',
+        'What will happen if you keep doing things the same way?',
+        'What could improve if you commit properly and follow through?',
+      ],
+      examples: [
+        'I know I need to take this seriously now because I have been feeling stretched for too long, and the business is relying too heavily on me. If nothing changes, I will keep feeling reactive, frustrated, and stuck in the day-to-day. If I follow through, I can create more clarity, make better decisions, and start building a business that feels more controlled, profitable, and sustainable.',
+      ],
     },
   };
 
