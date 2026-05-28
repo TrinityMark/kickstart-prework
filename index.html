@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kick Start Pre-Work</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border: 1px solid #e8edf3;
+    }
+
+    .section-heading {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #15397F;
+      margin: 0 0 20px;
+      line-height: 1.4;
+    }
+
+    .q-block { display: flex; flex-direction: column; gap: 10px; }
+    .q-header { display: flex; align-items: flex-start; gap: 10px; }
+
+    .q-number {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #15397F;
+      color: white;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .q-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: #1e293b;
+      line-height: 1.5;
+      padding-top: 3px;
+    }
+
+    .answer-boxes { display: flex; flex-direction: column; gap: 8px; padding-left: 38px; }
+
+    .answer-box {
+      width: 100%;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9px;
+      padding: 11px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #0f172a;
+      background: #f8fafc;
+      transition: border-color 0.15s, background 0.15s;
+      -webkit-appearance: none;
+      box-sizing: border-box;
+      resize: none;
+      overflow: hidden;
+      min-height: 44px;
+      line-height: 1.55;
+    }
+
+    .answer-box:focus { outline: none; border-color: #15397F; background: white; }
+    .answer-box::placeholder { color: #cbd5e1; }
+
+    .add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: 38px;
+      padding: 7px 13px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #15397F;
+      background: #f0f4ff;
+      border: 1.5px dashed #bfcfff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .add-btn:hover { background: #e0e9ff; border-color: #99b0ff; }
+    .add-btn:active { transform: scale(0.97); }
+
+    .field-input {
+      width: 100%;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 16px;
+      font-family: inherit;
+      color: #0f172a;
+      background: #f8fafc;
+      transition: border-color 0.15s, background 0.15s;
+      -webkit-appearance: none;
+      box-sizing: border-box;
+    }
+
+    .field-input:focus { outline: none; border-color: #15397F; background: white; }
+
+    textarea.field-input {
+      resize: none;
+      overflow: hidden;
+      min-height: 90px;
+      line-height: 1.6;
+    }
+
+    /* Scale buttons with tooltips */
+    .scale-row { display: flex; gap: 6px; margin-top: 10px; }
+
+    .scale-btn {
+      position: relative;
+      flex: 1;
+      padding: 16px 4px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #94a3b8;
+      background: #f8fafc;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.12s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .scale-btn:active { transform: scale(0.94); }
+    .scale-btn.selected { background: #15397F; border-color: #15397F; color: white; }
+
+    .scale-btn::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: white;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 5px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 10;
+    }
+
+    .scale-btn:hover::after { opacity: 1; }
+
+    .scale-end-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 6px;
+      padding: 0 2px;
+    }
+
+    /* Top and bottom save bars */
+    .save-bar {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-color: #e8edf3;
+      padding: 10px 16px;
+    }
+
+    #save-bar-top {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      border-bottom: 1px solid #e8edf3;
+      padding-top: max(10px, env(safe-area-inset-top));
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      padding: 10px 16px;
+      padding-top: max(10px, env(safe-area-inset-top));
+    }
+
+    .save-bar-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .save-bar-title { font-size: 14px; font-weight: 700; color: #15397F; white-space: nowrap; }
+
+    .save-btn {
+      flex: 1;
+      background: #15397F;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 18px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+
+    .save-btn:hover { background: #0f2a5e; }
+    .save-btn:active { transform: scale(0.97); }
+    .save-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      z-index: 200;
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+      max-width: calc(100vw - 48px);
+      text-align: center;
+    }
+
+    #toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- Sticky top save bar -->
+<div id="save-bar-top">
+  <div class="save-bar-inner">
+    <span class="save-bar-title">Kick Start</span>
+    <button class="save-btn" id="save-btn-top" type="button">Save and email my answers</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Main content -->
+<div class="max-w-2xl mx-auto px-4 pb-12" style="padding-top: 72px;">
+
+  <!-- Header -->
+  <div class="mb-8 pt-4">
+    <h1 style="font-size:28px; font-weight:800; color:#0f172a; margin:0 0 20px;">Kick Start Pre-Work</h1>
+    <div style="font-size:14px; color:#374151; line-height:1.75;">
+      <p style="margin:0 0 12px;">Before we start building your next level, we need to get clear on where you are now, what you actually want, and what keeps pulling you back.</p>
+      <p style="margin:0 0 12px;">This is not a test. It is not about perfect answers. It is about honest answers.</p>
+      <p style="margin:0 0 12px;">This pre-work gives you a starting point. You will use these answers throughout the program to shape your goals, identity statements, habits, systems and action plan.</p>
+      <p style="margin:0 0 12px; font-weight:600; color:#0f172a;">Don't write what sounds impressive. Write what is true.</p>
+      <p style="margin:0 0 12px;">Done is better than perfect. Take approximately 30 minutes to complete this.</p>
+      <p style="margin:0;">Tap <strong style="color:#15397F;">Save and email my answers</strong> at any point to get a link sent to you – you can return and edit any time.</p>
+    </div>
+  </div>
+
+  <!-- Your Details -->
+  <div class="card">
+    <h2 class="section-heading">Before You Start – Your Details</h2>
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div>
+        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="name">Your name</label>
+        <input class="field-input" type="text" id="name" placeholder="Full name" autocomplete="name">
+      </div>
+      <div>
+        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="email">Your email <span style="color:#ef4444;">*</span></label>
+        <input class="field-input" type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        <p style="font-size:12px; color:#94a3b8; margin:6px 0 0;">We'll email you a link so you can return and edit any time.</p>
+      </div>
+      <div>
+        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="business_name">Business name</label>
+        <input class="field-input" type="text" id="business_name" placeholder="Your business name" autocomplete="organization">
+      </div>
+      <div>
+        <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="advisor_name">Advisor name</label>
+        <input class="field-input" type="text" id="advisor_name" placeholder="Your advisor's name">
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Self-Check -->
+  <div class="card">
+    <h2 class="section-heading">Quick Self-Check – Before Week 1</h2>
+    <p style="font-size:14px; color:#64748b; margin:-8px 0 24px; line-height:1.5;">Rate yourself honestly. Hover or hold a number to see what each means.</p>
+
+    <div style="display:flex; flex-direction:column; gap:28px;">
+
+      <div>
+        <p style="font-size:15px; font-weight:600; color:#1e293b; margin:0 0 2px;">Clarity</p>
+        <p style="font-size:13px; color:#64748b; margin:0 0 10px; line-height:1.4;">I know what I want my life and business to look like over the next 12 months.</p>
+        <div class="scale-row">
+          <button class="scale-btn" data-field="sc1" data-val="1" data-tooltip="Not clear" type="button">1</button>
+          <button class="scale-btn" data-field="sc1" data-val="2" data-tooltip="A little clear" type="button">2</button>
+          <button class="scale-btn" data-field="sc1" data-val="3" data-tooltip="Somewhat clear" type="button">3</button>
+          <button class="scale-btn" data-field="sc1" data-val="4" data-tooltip="Clear" type="button">4</button>
+          <button class="scale-btn" data-field="sc1" data-val="5" data-tooltip="Very clear" type="button">5</button>
+        </div>
+        <div class="scale-end-labels"><span>Not clear</span><span>Very clear</span></div>
+      </div>
+
+      <div>
+        <p style="font-size:15px; font-weight:600; color:#1e293b; margin:0 0 2px;">Direction</p>
+        <p style="font-size:13px; color:#64748b; margin:0 0 10px; line-height:1.4;">I have clear goals that are specific, measurable and meaningful.</p>
+        <div class="scale-row">
+          <button class="scale-btn" data-field="sc2" data-val="1" data-tooltip="Not clear" type="button">1</button>
+          <button class="scale-btn" data-field="sc2" data-val="2" data-tooltip="A little clear" type="button">2</button>
+          <button class="scale-btn" data-field="sc2" data-val="3" data-tooltip="Somewhat clear" type="button">3</button>
+          <button class="scale-btn" data-field="sc2" data-val="4" data-tooltip="Clear" type="button">4</button>
+          <button class="scale-btn" data-field="sc2" data-val="5" data-tooltip="Very clear" type="button">5</button>
+        </div>
+        <div class="scale-end-labels"><span>Not clear</span><span>Very clear</span></div>
+      </div>
+
+      <div>
+        <p style="font-size:15px; font-weight:600; color:#1e293b; margin:0 0 2px;">Identity</p>
+        <p style="font-size:13px; color:#64748b; margin:0 0 10px; line-height:1.4;">I know the kind of owner, leader and person I need to become next.</p>
+        <div class="scale-row">
+          <button class="scale-btn" data-field="sc3" data-val="1" data-tooltip="Not clear" type="button">1</button>
+          <button class="scale-btn" data-field="sc3" data-val="2" data-tooltip="A little clear" type="button">2</button>
+          <button class="scale-btn" data-field="sc3" data-val="3" data-tooltip="Somewhat clear" type="button">3</button>
+          <button class="scale-btn" data-field="sc3" data-val="4" data-tooltip="Clear" type="button">4</button>
+          <button class="scale-btn" data-field="sc3" data-val="5" data-tooltip="Very clear" type="button">5</button>
+        </div>
+        <div class="scale-end-labels"><span>Not clear</span><span>Very clear</span></div>
+      </div>
+
+      <div>
+        <p style="font-size:15px; font-weight:600; color:#1e293b; margin:0 0 2px;">Habits</p>
+        <p style="font-size:13px; color:#64748b; margin:0 0 10px; line-height:1.4;">I have consistent habits that support the business and life I want.</p>
+        <div class="scale-row">
+          <button class="scale-btn" data-field="sc4" data-val="1" data-tooltip="Not clear" type="button">1</button>
+          <button class="scale-btn" data-field="sc4" data-val="2" data-tooltip="A little clear" type="button">2</button>
+          <button class="scale-btn" data-field="sc4" data-val="3" data-tooltip="Somewhat clear" type="button">3</button>
+          <button class="scale-btn" data-field="sc4" data-val="4" data-tooltip="Clear" type="button">4</button>
+          <button class="scale-btn" data-field="sc4" data-val="5" data-tooltip="Very clear" type="button">5</button>
+        </div>
+        <div class="scale-end-labels"><span>Not clear</span><span>Very clear</span></div>
+      </div>
+
+      <div>
+        <p style="font-size:15px; font-weight:600; color:#1e293b; margin:0 0 2px;">Follow-Through</p>
+        <p style="font-size:13px; color:#64748b; margin:0 0 10px; line-height:1.4;">I keep doing what matters even when life and business get messy.</p>
+        <div class="scale-row">
+          <button class="scale-btn" data-field="sc5" data-val="1" data-tooltip="Not clear" type="button">1</button>
+          <button class="scale-btn" data-field="sc5" data-val="2" data-tooltip="A little clear" type="button">2</button>
+          <button class="scale-btn" data-field="sc5" data-val="3" data-tooltip="Somewhat clear" type="button">3</button>
+          <button class="scale-btn" data-field="sc5" data-val="4" data-tooltip="Clear" type="button">4</button>
+          <button class="scale-btn" data-field="sc5" data-val="5" data-tooltip="Very clear" type="button">5</button>
+        </div>
+        <div class="scale-end-labels"><span>Not clear</span><span>Very clear</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Part 1 -->
+  <div class="card">
+    <h2 class="section-heading">Part 1 – The Life You Actually Want</h2>
+    <div style="display:flex; flex-direction:column; gap:24px;">
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">1</span>
+          <span class="q-label">If your business gave you back 10 hours a week, what would you actually do with that time?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p1q1"></div>
+        <button class="add-btn" data-qid="p1q1" type="button">+ Add another</button>
+      </div>
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">2</span>
+          <span class="q-label">What would a great ordinary week look like outside the business?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p1q2"></div>
+        <button class="add-btn" data-qid="p1q2" type="button">+ Add another</button>
+      </div>
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">3</span>
+          <span class="q-label">What do you want the people closest to you to experience from you this year?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p1q3"></div>
+        <button class="add-btn" data-qid="p1q3" type="button">+ Add another</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Part 2 -->
+  <div class="card">
+    <h2 class="section-heading">Part 2 – The Business That Supports It</h2>
+    <div style="display:flex; flex-direction:column; gap:24px;">
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">4</span>
+          <span class="q-label">What is one business result that would make the biggest difference this year?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p2q4"></div>
+        <button class="add-btn" data-qid="p2q4" type="button">+ Add another</button>
+      </div>
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">5</span>
+          <span class="q-label">What work are you still doing that the business should no longer rely on you for?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p2q5"></div>
+        <button class="add-btn" data-qid="p2q5" type="button">+ Add another</button>
+      </div>
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">6</span>
+          <span class="q-label">Describe the type of client, job or work you want more of – and the type you want less of.</span>
+        </div>
+        <div class="answer-boxes" data-qid="p2q6"></div>
+        <button class="add-btn" data-qid="p2q6" type="button">+ Add another</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Part 3 -->
+  <div class="card">
+    <h2 class="section-heading">Part 3 – The Owner You Need to Become</h2>
+    <div style="display:flex; flex-direction:column; gap:24px;">
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">7</span>
+          <span class="q-label">What kind of owner or leader does the next version of your business need you to become?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p3q7"></div>
+        <button class="add-btn" data-qid="p3q7" type="button">+ Add another</button>
+      </div>
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">8</span>
+          <span class="q-label">What habit, if done consistently for 90 days, would change your business or life?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p3q8"></div>
+        <button class="add-btn" data-qid="p3q8" type="button">+ Add another</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Part 4 -->
+  <div class="card">
+    <h2 class="section-heading">Part 4 – What Keeps Pulling You Back</h2>
+    <div style="display:flex; flex-direction:column; gap:24px;">
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">9</span>
+          <span class="q-label">What keeps slowing you down, distracting you, or pulling you back into old patterns?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p4q9"></div>
+        <button class="add-btn" data-qid="p4q9" type="button">+ Add another</button>
+      </div>
+
+      <div class="q-block">
+        <div class="q-header">
+          <span class="q-number">10</span>
+          <span class="q-label">What belief, fear, excuse or story might be keeping you stuck at your current level?</span>
+        </div>
+        <div class="answer-boxes" data-qid="p4q10"></div>
+        <button class="add-btn" data-qid="p4q10" type="button">+ Add another</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Final Snapshot -->
+  <div class="card">
+    <h2 class="section-heading">Final Snapshot – What I Am Bringing Into Kick Start</h2>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The life I want more of is:</p>
+        <textarea class="answer-box" id="fs1" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The business result that matters most this year is:</p>
+        <textarea class="answer-box" id="fs2" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The work I need to stop personally owning is:</p>
+        <textarea class="answer-box" id="fs3" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The type of clients, jobs or work I want more of are:</p>
+        <textarea class="answer-box" id="fs4" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The type of clients, jobs or work I want less of are:</p>
+        <textarea class="answer-box" id="fs5" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The owner or leader I need to become is:</p>
+        <textarea class="answer-box" id="fs6" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The habit I need to build over the next 90 days is:</p>
+        <textarea class="answer-box" id="fs7" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The friction or pattern I need to remove is:</p>
+        <textarea class="answer-box" id="fs8" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">The belief, fear or excuse I need to challenge is:</p>
+        <textarea class="answer-box" id="fs9" rows="1"></textarea>
+      </div>
+      <div>
+        <p style="font-size:13px; font-weight:500; color:#64748b; margin:0 0 6px;">If Kick Start really worked for me, the biggest change I would see is:</p>
+        <textarea class="answer-box" id="fs10" rows="1"></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Final Commitment -->
+  <div class="card">
+    <h2 class="section-heading">Final Commitment – Why This Matters</h2>
+    <div>
+      <label style="display:block; font-size:15px; font-weight:500; color:#1e293b; margin-bottom:8px;" for="fc">Why does this matter to me now?</label>
+      <textarea class="field-input" id="fc" placeholder="Your answer..."></textarea>
+    </div>
+  </div>
+
+  <!-- Bottom save button -->
+  <div style="margin-top: 8px;">
+    <div class="save-bar-inner" style="max-width:100%;">
+      <button class="save-btn" id="save-btn-bottom" type="button" style="flex:1; padding:16px 18px; font-size:15px; border-radius:12px;">Save and email my answers</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── TODO: Replace with your Power Automate HTTP trigger URL ──────────────
+  const POWER_AUTOMATE_URL = 'YOUR_POWER_AUTOMATE_URL_HERE';
+
+  const QUESTION_IDS = [
+    'p1q1','p1q2','p1q3',
+    'p2q4','p2q5','p2q6',
+    'p3q7','p3q8',
+    'p4q9','p4q10'
+  ];
+
+  const SIMPLE_IDS = [
+    'name','email','business_name','advisor_name',
+    'fs1','fs2','fs3','fs4','fs5','fs6','fs7','fs8','fs9','fs10',
+    'fc'
+  ];
+
+  const SCALE_IDS = ['sc1','sc2','sc3','sc4','sc5'];
+
+  // ── Auto-resize a textarea ────────────────────────────────────────────────
+  function autoResize(ta) {
+    ta.style.height = 'auto';
+    ta.style.height = ta.scrollHeight + 'px';
+  }
+
+  // ── Create and wire up a single answer textarea ───────────────────────────
+  function createAnswerBox(container, value, isFirst) {
+    const ta = document.createElement('textarea');
+    ta.className = 'answer-box';
+    ta.rows = 1;
+    if (isFirst) ta.placeholder = 'First thought...';
+    ta.value = value;
+
+    ta.addEventListener('input', () => {
+      autoResize(ta);
+      saveAnswerBoxes(container);
+    });
+
+    container.appendChild(ta);
+    if (value) requestAnimationFrame(() => autoResize(ta));
+
+    return ta;
+  }
+
+  // ── Save all answers for a question group ─────────────────────────────────
+  function saveAnswerBoxes(container) {
+    const values = Array.from(container.querySelectorAll('textarea')).map(ta => ta.value);
+    localStorage.setItem(container.dataset.qid, JSON.stringify(values));
+  }
+
+  // ── Initialise question groups ────────────────────────────────────────────
+  function initQuestionBoxes() {
+    document.querySelectorAll('.answer-boxes').forEach(container => {
+      const stored = JSON.parse(localStorage.getItem(container.dataset.qid) || '[]');
+      const count = Math.max(2, stored.length);
+      for (let i = 0; i < count; i++) {
+        createAnswerBox(container, stored[i] || '', i === 0);
+      }
+    });
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const container = document.querySelector(`.answer-boxes[data-qid="${btn.dataset.qid}"]`);
+        const ta = createAnswerBox(container, '', false);
+        saveAnswerBoxes(container);
+        ta.focus();
+      });
+    });
+  }
+
+  // ── Scale buttons ─────────────────────────────────────────────────────────
+  document.querySelectorAll('.scale-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const field = btn.dataset.field;
+      document.querySelectorAll(`.scale-btn[data-field="${field}"]`).forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      localStorage.setItem(field, btn.dataset.val);
+    });
+  });
+
+  // ── Auto-save simple text/textarea fields ─────────────────────────────────
+  SIMPLE_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', () => {
+      localStorage.setItem(id, el.value);
+      if (el.tagName === 'TEXTAREA') autoResize(el);
+    });
+  });
+
+  // ── Collect all state ─────────────────────────────────────────────────────
+  function collectState() {
+    const s = {};
+    SIMPLE_IDS.forEach(id => { s[id] = localStorage.getItem(id) || ''; });
+    QUESTION_IDS.forEach(qid => { s[qid] = JSON.parse(localStorage.getItem(qid) || '[]'); });
+    SCALE_IDS.forEach(id => { s[id] = localStorage.getItem(id) || ''; });
+    return s;
+  }
+
+  // ── Base64 URL encode / decode ────────────────────────────────────────────
+  function buildShareURL() {
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(collectState()))));
+    return `${window.location.origin}${window.location.pathname}#${encoded}`;
+  }
+
+  function loadFromHash() {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    try {
+      const state = JSON.parse(decodeURIComponent(escape(atob(hash))));
+      SIMPLE_IDS.forEach(id => { if (state[id]) localStorage.setItem(id, state[id]); });
+      QUESTION_IDS.forEach(qid => {
+        if (Array.isArray(state[qid]) && state[qid].length) {
+          localStorage.setItem(qid, JSON.stringify(state[qid]));
+        }
+      });
+      SCALE_IDS.forEach(id => { if (state[id]) localStorage.setItem(id, state[id]); });
+      history.replaceState(null, '', window.location.pathname);
+    } catch { /* invalid hash — ignore */ }
+  }
+
+  // ── Restore simple fields + scale from localStorage ───────────────────────
+  function restoreSimpleFields() {
+    SIMPLE_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      const val = localStorage.getItem(id);
+      if (el && val) {
+        el.value = val;
+        if (el.tagName === 'TEXTAREA') requestAnimationFrame(() => autoResize(el));
+      }
+    });
+
+    SCALE_IDS.forEach(id => {
+      const val = localStorage.getItem(id);
+      if (!val) return;
+      const btn = document.querySelector(`.scale-btn[data-field="${id}"][data-val="${val}"]`);
+      if (btn) btn.classList.add('selected');
+    });
+  }
+
+  // ── Toast ─────────────────────────────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg, duration = 4000) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  // ── Save and email (shared handler) ──────────────────────────────────────
+  async function handleSave(triggerBtn) {
+    const email = (document.getElementById('email').value || '').trim();
+    if (!email || !email.includes('@')) {
+      showToast('Please enter your email address first.');
+      document.getElementById('email').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => document.getElementById('email').focus(), 400);
+      return;
+    }
+
+    const originalText = triggerBtn.textContent;
+    document.querySelectorAll('.save-btn').forEach(b => { b.disabled = true; b.textContent = 'Sending…'; });
+
+    const shareUrl = buildShareURL();
+
+    if (POWER_AUTOMATE_URL === 'YOUR_POWER_AUTOMATE_URL_HERE') {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        showToast('Link copied! (Configure Power Automate to enable email.)');
+      } catch {
+        prompt('Copy your personal link:', shareUrl);
+      }
+      document.querySelectorAll('.save-btn').forEach(b => { b.disabled = false; b.textContent = 'Save and email my answers'; });
+      return;
+    }
+
+    try {
+      const state = collectState();
+      await fetch(POWER_AUTOMATE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: state.email,
+          name: state.name,
+          business_name: state.business_name,
+          advisor_name: state.advisor_name,
+          share_url: shareUrl,
+          responses: state,
+        }),
+      });
+      showToast(`Answers sent to ${email}`);
+    } catch {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        showToast('Could not send email – link copied to clipboard.');
+      } catch {
+        prompt('Copy your personal link:', shareUrl);
+      }
+    } finally {
+      document.querySelectorAll('.save-btn').forEach(b => { b.disabled = false; b.textContent = 'Save and email my answers'; });
+    }
+  }
+
+  document.getElementById('save-btn-top').addEventListener('click', function() { handleSave(this); });
+  document.getElementById('save-btn-bottom').addEventListener('click', function() { handleSave(this); });
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  loadFromHash();
+  initQuestionBoxes();
+  restoreSimpleFields();
+</script>
+
+</body>
+</html>
