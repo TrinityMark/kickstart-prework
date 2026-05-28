@@ -245,6 +245,129 @@
     }
 
     #toast.show { opacity: 1; }
+
+    /* Hint button */
+    .hint-btn {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #eef2ff;
+      border: 1.5px solid #c7d2fe;
+      color: #15397F;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 4px;
+      transition: background 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hint-btn:hover { background: #e0e9ff; }
+
+    /* Hint bottom sheet */
+    #hint-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    #hint-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #hint-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 20px 20px 36px;
+      padding-bottom: max(36px, calc(20px + env(safe-area-inset-bottom)));
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    #hint-overlay.open #hint-sheet {
+      transform: translateY(0);
+    }
+
+    .hint-handle {
+      width: 36px;
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+
+    #hint-sheet h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 12px;
+      line-height: 1.4;
+      padding-right: 28px;
+    }
+
+    #hint-sheet p {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.7;
+      margin: 0 0 12px;
+    }
+
+    #hint-sheet .hint-examples-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #15397F;
+      margin: 16px 0 10px;
+    }
+
+    #hint-sheet ul {
+      margin: 0;
+      padding-left: 18px;
+      list-style-type: disc;
+    }
+
+    #hint-sheet ul li {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+
+    #hint-sheet ul li:last-child { margin-bottom: 0; }
+
+    #hint-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      border: none;
+      font-size: 16px;
+      color: #64748b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    #hint-close:hover { background: #e2e8f0; }
   </style>
 </head>
 <body>
@@ -259,6 +382,15 @@
 
 <!-- Toast -->
 <div id="toast"></div>
+
+<!-- Hint bottom sheet -->
+<div id="hint-overlay">
+  <div id="hint-sheet" role="dialog" aria-modal="true">
+    <div class="hint-handle"></div>
+    <button id="hint-close" aria-label="Close hint">&#x2715;</button>
+    <div id="hint-content"></div>
+  </div>
+</div>
 
 <!-- Main content -->
 <div class="max-w-2xl mx-auto px-4 pb-12" style="padding-top: 72px;">
@@ -395,6 +527,7 @@
         <div class="q-header">
           <span class="q-number">1</span>
           <span class="q-label">If your business gave you back 10 hours a week, what would you actually do with that time?</span>
+          <button class="hint-btn" data-hint="p1q1" type="button" aria-label="Show hint">?</button>
         </div>
         <div class="answer-boxes" data-qid="p1q1"></div>
         <button class="add-btn" data-qid="p1q1" type="button">+ Add another</button>
@@ -529,6 +662,52 @@
 <script>
   // ── TODO: Replace with your Power Automate HTTP trigger URL ──────────────
   const POWER_AUTOMATE_URL = 'YOUR_POWER_AUTOMATE_URL_HERE';
+
+  // ── Hint content ──────────────────────────────────────────────────────────
+  const HINTS = {
+    p1q1: {
+      title: 'If your business gave you back 10 hours a week, what would you actually do with that time?',
+      body: 'Most business owners say they want more time, but they have not clearly defined what that time is for. This question matters because time freedom is only valuable if you know how you would use it.',
+      thinkAbout: 'Family, health, rest, thinking time, hobbies, friendships, travel, personal development, or simply not feeling rushed all the time.',
+      examples: [
+        'I would train at the gym three mornings a week before work.',
+        'I would finish early on Fridays and have dinner with my family without checking my phone.',
+        'I would take my kids to school twice a week instead of rushing out the door.',
+        'I would spend one morning a week thinking, planning and working on the business properly.',
+      ]
+    }
+  };
+
+  // ── Hint sheet open / close ───────────────────────────────────────────────
+  const hintOverlay = document.getElementById('hint-overlay');
+  const hintContent = document.getElementById('hint-content');
+
+  function openHint(key) {
+    const h = HINTS[key];
+    if (!h) return;
+    hintContent.innerHTML = `
+      <h3>${h.title}</h3>
+      <p>${h.body}</p>
+      <p><strong>Think about:</strong> ${h.thinkAbout}</p>
+      <p class="hint-examples-label">Example Answers</p>
+      <ul>${h.examples.map(e => `<li>${e}</li>`).join('')}</ul>
+    `;
+    hintOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeHint() {
+    hintOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('hint-close').addEventListener('click', closeHint);
+  hintOverlay.addEventListener('click', e => { if (e.target === hintOverlay) closeHint(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHint(); });
+
+  document.querySelectorAll('.hint-btn').forEach(btn => {
+    btn.addEventListener('click', () => openHint(btn.dataset.hint));
+  });
 
   const QUESTION_IDS = [
     'p1q1','p1q2','p1q3',
