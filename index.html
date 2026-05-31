@@ -384,7 +384,7 @@
   <div class="save-bar-inner">
     <span class="save-bar-title">Kick Start</span>
     <button class="save-btn" id="save-btn-top" type="button">Save</button>
-    <button class="email-btn" id="email-btn-top" type="button">Email Me My Prework Summary</button>
+    <button class="email-btn" id="email-btn-top" type="button">I have completed the prework - email me my summary</button>
   </div>
 </div>
 
@@ -675,7 +675,7 @@
   <div style="margin-top: 8px;">
     <div class="save-bar-inner" style="max-width:100%; gap:10px;">
       <button class="save-btn" id="save-btn-bottom" type="button" style="padding:16px 12px; font-size:15px; border-radius:12px;">Save</button>
-      <button class="email-btn" id="email-btn-bottom" type="button" style="padding:16px 12px; font-size:15px; border-radius:12px;">Email Me My Prework Summary</button>
+      <button class="email-btn" id="email-btn-bottom" type="button" style="padding:16px 12px; font-size:15px; border-radius:12px;">I have completed the prework - email me my summary</button>
     </div>
   </div>
 
@@ -1085,7 +1085,7 @@
         prompt('Copy your personal link:', shareUrl);
       }
     } finally {
-      document.querySelectorAll('.email-btn').forEach(b => { b.disabled = false; b.textContent = 'Email Me My Prework Summary'; });
+      document.querySelectorAll('.email-btn').forEach(b => { b.disabled = false; b.textContent = 'I have completed the prework - email me my summary'; });
     }
   }
 
