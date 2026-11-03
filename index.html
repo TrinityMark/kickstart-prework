@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KickStart Pre-Work</title>
+  <link rel="stylesheet" href="trinity.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; }
+    body { font-family: var(--font); background: #f1f5f9; }
 
     .card {
       background: white;
@@ -440,14 +441,10 @@
         <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="advisor_name">Advisor name <span style="color:#ef4444;">*</span></label>
         <select class="field-input" id="advisor_name" required style="cursor:pointer;">
           <option value="" disabled selected>Select your advisor...</option>
-          <option value="Andrea Szasz">Andrea Szasz</option>
-          <option value="Conor Sarran">Conor Sarran</option>
-          <option value="Joshua Patten">Joshua Patten</option>
-          <option value="Josh Sherrington">Josh Sherrington</option>
-          <option value="Nick Mulqueen">Nick Mulqueen</option>
-          <option value="Richard Caldecott">Richard Caldecott</option>
           <option value="Not sure">Not sure</option>
         </select>
+        <script src="trinity-advisors.js"></script>
+        <script>trinityLoadAdvisors('advisor_name', { extra: ['Not sure'] });</script>
       </div>
     </div>
   </div>
