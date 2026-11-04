@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KickStart Pre-Work</title>
+  <link rel="stylesheet" href="trinity.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; }
+    body { font-family: var(--font); background: var(--trinity-grey-light); }
 
     .card {
       background: white;
@@ -22,7 +23,7 @@
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #15397F;
+      color: var(--trinity-blue);
       margin: 0 0 20px;
       line-height: 1.4;
     }
@@ -34,7 +35,7 @@
       flex-shrink: 0;
       width: 28px;
       height: 28px;
-      background: #15397F;
+      background: var(--trinity-blue);
       color: white;
       border-radius: 50%;
       font-size: 13px;
@@ -73,7 +74,7 @@
       line-height: 1.55;
     }
 
-    .answer-box:focus { outline: none; border-color: #15397F; background: white; }
+    .answer-box:focus { outline: none; border-color: var(--trinity-blue); background: white; }
     .answer-box::placeholder { color: #cbd5e1; }
 
     .add-btn {
@@ -84,7 +85,7 @@
       padding: 7px 13px;
       font-size: 13px;
       font-weight: 600;
-      color: #15397F;
+      color: var(--trinity-blue);
       background: #f0f4ff;
       border: 1.5px dashed #bfcfff;
       border-radius: 8px;
@@ -111,7 +112,7 @@
       box-sizing: border-box;
     }
 
-    .field-input:focus { outline: none; border-color: #15397F; background: white; }
+    .field-input:focus { outline: none; border-color: var(--trinity-blue); background: white; }
 
     textarea.field-input {
       resize: none;
@@ -141,7 +142,7 @@
     }
 
     .scale-btn:active { transform: scale(0.94); }
-    .scale-btn.selected { background: #15397F; border-color: #15397F; color: white; }
+    .scale-btn.selected { background: var(--trinity-blue); border-color: var(--trinity-blue); color: white; }
 
     .scale-btn::after {
       content: attr(data-tooltip);
@@ -202,7 +203,7 @@
       gap: 12px;
     }
 
-    .save-bar-title { font-size: 14px; font-weight: 700; color: #15397F; white-space: nowrap; }
+    .save-bar-title { font-size: 14px; font-weight: 700; color: var(--trinity-blue); white-space: nowrap; }
 
     .save-btn, .email-btn {
       flex: 1;
@@ -219,8 +220,8 @@
       text-align: center;
     }
 
-    .save-btn { background: #15397F; }
-    .save-btn:hover { background: #0f2a5e; }
+    .save-btn { background: var(--trinity-blue); }
+    .save-btn:hover { background: var(--trinity-dark); }
     .save-btn:active { transform: scale(0.97); }
     .save-btn:disabled { background: #94a3b8; cursor: not-allowed; }
 
@@ -337,7 +338,7 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #15397F;
+      color: var(--trinity-blue);
       margin: 16px 0 10px;
     }
 
@@ -414,7 +415,7 @@
         <li style="margin-bottom:8px;">Don't write what sounds impressive. Write what is true.</li>
         <li style="margin-bottom:8px;">Tap the <span style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:50%; background:#FFC000; color:white; font-size:11px; font-weight:700; font-style:italic; vertical-align:middle; position:relative; top:-1px;">i</span> button next to any question for information and example answers.</li>
         <li style="margin-bottom:8px;">Done is better than perfect. Take approximately 30 minutes to complete this.</li>
-        <li>Tap <strong style="color:#15397F;">Save and email me my answers</strong> at any point to get a link sent to you – you can return and edit any time.</li>
+        <li>Tap <strong style="color:var(--trinity-blue);">Save and email me my answers</strong> at any point to get a link sent to you – you can return and edit any time.</li>
       </ul>
     </div>
   </div>
@@ -440,14 +441,10 @@
         <label style="display:block; font-size:14px; font-weight:600; color:#374151; margin-bottom:6px;" for="advisor_name">Advisor name <span style="color:#ef4444;">*</span></label>
         <select class="field-input" id="advisor_name" required style="cursor:pointer;">
           <option value="" disabled selected>Select your advisor...</option>
-          <option value="Andrea Szasz">Andrea Szasz</option>
-          <option value="Conor Sarran">Conor Sarran</option>
-          <option value="Joshua Patten">Joshua Patten</option>
-          <option value="Josh Sherrington">Josh Sherrington</option>
-          <option value="Nick Mulqueen">Nick Mulqueen</option>
-          <option value="Richard Caldecott">Richard Caldecott</option>
           <option value="Not sure">Not sure</option>
         </select>
+        <script src="trinity-advisors.js"></script>
+        <script>trinityLoadAdvisors('advisor_name', { extra: ['Not sure'] });</script>
       </div>
     </div>
   </div>
